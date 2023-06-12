@@ -1,0 +1,17 @@
+.category {
+    background: transparent;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgb(177, 149, 23);
+    width: 15vw;
+    height: 15vw;
+    border-radius: 7.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: relative;
+}
+
+.category:hover {
+    transform: rotate(15deg);
+}
+

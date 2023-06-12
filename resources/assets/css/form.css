@@ -1,0 +1,74 @@
+.form-box, .window {
+    border: 1px solid rgb(177, 149, 23);
+    border-radius: 15px;
+    color: rgb(177, 149, 23);
+    background: transparent;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px rgb(177, 149, 23);
+}
+
+.btn {
+    color: rgb(177, 149, 23);
+    border-radius: 7px;
+    background-color: transparent;
+    border: 1px solid rgb(177, 149, 23);
+    transition: width 2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    backdrop-filter: blur(20px);
+}
+
+.btn:hover {
+
+    box-shadow: 0 0 10px rgb(177, 149, 23);
+}
+
+.name {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2em;
+}
+
+label {
+    font-family: monospace;
+}
+
+
+div a {
+    color: white;
+}
+
+.frame {
+    border: 1px dotted rgb(177, 149, 23);
+    border-radius: 7px;
+}
+
+.window {
+    border-radius: 7px;
+    position: absolute;
+    top: 38vh;
+    right: 2vw;
+    display: none;
+
+}
+
+.validationErrors {
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    border-radius: 7px;
+    color: rgb(197, 15, 15);
+    box-shadow: 0 0 10px red;
+    width: 50%;
+    font-weight: bold;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: rgb(177, 149, 23);
+}
+
+span {
+    color: white;
+}
+    

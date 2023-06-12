@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+
+html {
+    width:100%;
+    height: 100%;
+}
+
+body {
+    background: url('/public/pictures/background.jpg') center center no-repeat fixed;
+    background-size: cover;
+    width:100%;
+    height: 100%;
+    margin: 0;
+    bottom: 0;
+}
+
+.page {
+    min-height: 100%;
+}
+
+.nav, .footer a {
+    color: rgb(177, 149, 23);
+}
+
+p.nav {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2em;
+}
+
+a.nav {
+    text-decoration: none;
+    width: 70px;
+    height: 35px;
+    border-radius: 7px;
+    background-color: transparent;
+    border: 1px solid rgb(177, 149, 23);
+    transition: width 2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a.nav:hover {
+   background-color: rgb(177, 149, 23);
+   color: black;
+   width: 85px;
+   font-weight: bold;
+   opacity: 0.6;
+}
+
+.footer a {
+    font-family:'Times New Roman', Times, serif;
+    text-decoration: none;
+}
+
+.footer {
+    border-top: 2px solid rgb(177, 149, 23);
+}
+
