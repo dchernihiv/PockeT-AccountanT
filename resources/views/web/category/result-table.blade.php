@@ -2,6 +2,8 @@
 
 <table class="table table-success table-striped table-hover">
     <tr>
+        <th hidden></th>
+        <th></th>
         <th>дата</th>
         <th>транзакції</th>
         <th>категорії</th>
@@ -12,6 +14,8 @@
 
     @foreach ($data as $element)
     <tr>
+        <td hidden>{{ $element['id'] }}</td>
+        <td><input type="checkbox" name="choice"></td>
         <td>{{ $element['date'] }}</td>
         <td>{{ $element['transaction'] }}</td>
         <td>{{ $element['category'] }}</td>

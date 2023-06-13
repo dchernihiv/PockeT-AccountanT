@@ -37,8 +37,8 @@
         </div>
 
         <div class="d-flex flex-row mt-4 ms-2 mb-4">
-            <button type="button" class="btn me-4">змінити</button>
-            <button type="button" class="btn">видалити</button>
+            <button type="button" class="btn me-4" name="change">змінити</button>
+            <button type="button" class="btn" name="remove">видалити</button>
         </div>
     </div>
 

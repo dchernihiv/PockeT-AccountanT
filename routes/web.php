@@ -70,7 +70,9 @@ Route::name('web.')->middleware(['auth', 'verified'])->group( function () {
 
     Route::view('table/modify','web.category.modify')->name('modify');
 
-    Route::post('table/modify',[FinanceDataController::class, 'index']);
+    Route::post('table/modify', [FinanceDataController::class, 'index']);
+
+    Route::post('/record/destroy', [FinanceDataController::class, 'destroy']);
 
 
    

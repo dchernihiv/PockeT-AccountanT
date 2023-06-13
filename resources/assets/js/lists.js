@@ -248,7 +248,7 @@ export class Lists {
 
         this.modifyBtn.addEventListener('click', () => {
 
-            let url = "http://buh.ua/table/modify";
+            const url = "http://buh.ua/table/modify";
             let date = [];
             date.push(document.querySelector('input[name="period-start"]').value);
             date.push(document.querySelector('input[name="period-end"]').value);
@@ -256,6 +256,22 @@ export class Lists {
             this.requestToServer(url, date);
 
         });
+
+    }
+
+    destroyRecord(button, url) {
+
+        //const url = "http://buh.ua/record/remove";
+        const checkbox = document.querySelector('input[name="choice"]');
+
+        for (let i = 0; )
+        if (checkbox.checked) {
+            let id =  document.querySelector('td[hidden]').value;
+
+            button.addEventListener('click', () => {
+                this.requestToServer(url, id);
+            });
+        }
 
     }
 
