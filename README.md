@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,3 +65,18 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# PockeT AccountanT
+PockeT-AccountanT это приложение - домашний бухгалтер, позволяющее вести учет денежных средств в разрезе
+различных категорий и подкатегорий доходов и расходов, строить удобные графики и получать другие отчеты по своим личным финансам.
+
+Сам проект написан на Laravel, клиентская часть реализована на чистом JS.
+
+В рамках данного учебного проекта отработаны следующие механизмы:
+- написание маршрутов
+- запросы клиент/сервер
+- получение и интерпретация ответов от сервера
+- построение запросов к базе данных при помощи методов eloquent model
+- использование отношений моделей
+- написание шаблонов blade
+>>>>>>> 4a18ff01bfcc491fb440bc1b9ae62b7463a14ea3
