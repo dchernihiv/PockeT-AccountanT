@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 use App\Models\Currency;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Validator;
 
 
 class WebController extends Controller {
 
+    /**
+     *  Начальное заполнение списков категорий и подкатегорий данными из БД
+     *  */
+    
     public function showItems(Request $request) {
 
         $items = Category::select('category', 'subcategory')
@@ -23,8 +28,13 @@ class WebController extends Controller {
         $currency = Currency::pluck('currency');
 
         return response()->json([$items, $currency]);
+        
 
     }
+
+    /** 
+     * Добовление в БД новых значений категорий/подкатегорий/валюты
+     *  */
 
     public function createNewTitles(Request $request) {
 
@@ -45,7 +55,7 @@ class WebController extends Controller {
                 'unique:categories,subcategory'
             ]
         ]);
-
+       
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -107,6 +117,68 @@ class WebController extends Controller {
             return response()->json(null);
         }
 
+    }
+
+    /** 
+     * Построение графиков
+     *  */
+
+    public function sendDataForChart (Request $request) {
+
+        $validator = Validator::make($request->all(), [
+                'type' => 'required',
+                'date' => 'array',
+                'date.*' => 'required',
+                'transaction' => 'required',
+                'newItem' => 'nullable',
+                'subNewItem' => 'nullable'
+            ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $startPeriod = $request->input('date')[0];
+        $endPeriod = $request->input('date')[1];
+
+        $data= Transaction::where([
+                ['user_id', $request->user()->id],
+                ['transaction', $request->input('transaction')],
+            ])
+            ->whereBetween('date', [$startPeriod, $endPeriod])
+            ->get()
+            ->map(fn ($item) => $item->setVisible(['type', 'date', 'sum']));
+
+        $wrongValue = 'виберіть категорію...';
+
+        if ( request('newItem') != $wrongValue && request('subNewItem') != $wrongValue ) {
+           
+            $category_id = Category::where([
+                    ['transaction', $request->input('transaction')],
+                    ['category', $request->input('newItem')],
+                    ['subcategory', $request->input('subNewItem')]
+                ])
+                ->first()
+                ->id;
+         
+            $data = $data->filter(function($item) use($category_id) {
+                    return $item->category_id == $category_id;
+                });
+        }
+        if ($request->input('newItem') != $wrongValue && $request->input('subNewItem') == $wrongValue) {
+            
+            $category_id = Category::where([
+                ['transaction', $request->input('transaction')],
+                ['category', $request->input('newItem')],
+            ])
+            ->first()
+            ->id;
+            $data = $data->filter(function($item) use($category_id) {
+                    return $item->category_id == $category_id;
+                });
+        }
+
+        return response()->json($data);
     }
 
 }

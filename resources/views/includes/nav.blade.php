@@ -4,7 +4,7 @@
             <p class="nav navbar-brand">PockeT AccountanT</p>
             <ul class="nav">
                 <li class="list-unstyled">
-                    <a class="nav" href="{{ route('login') }}">Войти</a>
+                    <a class="nav" href="{{ route('login') }}">Увійти</a>
                 </li>
             </ul>
         </div>

@@ -12,15 +12,16 @@
         </div>
     @endif
 
-    <div class="conteiner">
-        <div class="d-flex flex-row justify-content-end me-2">
-            <button class="btn"><a class="text-decoration-none text-reset" href="{{ route('logout') }}">Вихід</a></button>
-        </div>
+    @if(session('status'))
+        <div class="alert alert-success col-4 mx-auto">{{ session('status') }}</div>
+    @endif
 
+    <div class="conteiner mt-4">
+        
         <div class="form-box col-4 mx-auto">
             <div class="text-center fs-3 name">Аутентифікація</div>
             
-            <form method="post">
+            <form method="post" autocomplete="off">
                 @csrf
 
                 <div class="ms-2 me-2">
@@ -44,7 +45,7 @@
                         <input type="checkbox" class="form-check-input" id="remember" name="remember" checked>
                     </div>
 
-                    <a href="" class="col-6 d-flex justify-content-end"><span>Забули пароль?</span></a>
+                    <a href="{{ route('password.request') }}" class="col-6 d-flex justify-content-end"><span>Забули пароль?</span></a>
                 </div>
 
                 <input type="submit" class="btn my-3 ms-2" value="Увійти">

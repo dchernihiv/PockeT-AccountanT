@@ -26,7 +26,7 @@ class RegistrationController extends Controller
         
         $user = User::where('email', $data['email'])->first();
         if ($user) { 
-            back()->withErrors('user-exist', 'Пользователь с данным email уже зарегистрирован');
+            back()->withErrors('user-exist', 'Користувач з таким email вже зареєстрований');
         }
         User::create($data);
         return redirect()->route('login');

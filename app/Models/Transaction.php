@@ -10,8 +10,8 @@ use App\Models\Currency;
 use App\Models\User;
 
 
-class Transaction extends Model
-{
+class Transaction extends Model {
+
     use HasFactory;
 
     protected $guarded = [];

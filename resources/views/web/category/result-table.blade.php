@@ -14,8 +14,8 @@
 
     @foreach ($data as $element)
     <tr>
-        <td hidden>{{ $element['id'] }}</td>
-        <td><input type="checkbox" name="choice"></td>
+        <td class="id" hidden>{{ $element['id'] }}</td>
+        <td><input type="checkbox"></td>
         <td>{{ $element['date'] }}</td>
         <td>{{ $element['transaction'] }}</td>
         <td>{{ $element['category'] }}</td>

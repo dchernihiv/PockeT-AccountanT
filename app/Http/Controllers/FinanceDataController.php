@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class FinanceDataController extends Controller {
 
-    
+    /**
+     * 
+     */
     public function index(Request $request) {
-
-        $startPeriod = $request->input('transaction')[0];
-        $endPeriod = $request->input('transaction')[1];
+     
+        $startPeriod = $request->input('date')[0];
+        $endPeriod = $request->input('date')[1];
 
         $data = Transaction::select('id', 'date', 'transaction', 'category_id', 'sum', 'currency_id')
             ->where('user_id', $request->user()->id)
@@ -37,6 +39,7 @@ class FinanceDataController extends Controller {
                 : null;
 
             $data[$i]['subcategory'] = $subcategory;
+            
             foreach ($data[$i] as $key => $value) {
 
                 if ($key == 'category_id') {
@@ -53,19 +56,19 @@ class FinanceDataController extends Controller {
 
         return response()->json([
             'conteiner' => 'table',
-            'html' => view('web.category.result-table', compact('data'))->render()
+            'html' => view('web.category.result-table', compact('data'))->render(),
         ]);
-        
+    
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Добавление в БД экземпляров модели Transaction
      */
+
     public function create(Request $request) {
     
         $data = $request->validate([
-            'transaction' => 'required|in:income,expenses',
+            'transaction' => 'required',
             'date' => 'date',
             'category' => 'required|doesnt_start_with:виберіть категорію...',
             'subcategory' => 'nullable',
@@ -98,45 +101,46 @@ class FinanceDataController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Обновление в БД экземпляров модели Transaction
      */
-    public function store(Request $request)
-    {
-        //
+
+    public function update(Request $request) {
+
+        $category_id = Category::where([
+                ['transaction', '=',  $request->input('transaction')],
+                ['category', '=', $request->input('newItem')],
+                ['subcategory', '=', $request->input('subNewItem')]
+            ])
+            ->first()
+            ->id;
+
+        $currency_id = Currency::where('currency', $request->input('currency'))
+            ->first()
+            ->id;
+
+        Transaction::find($request->input('id'))
+            ->update([
+                'user_id' => $request->user()->id,
+                'date' => $request->input('date'),
+                'transaction' => $request->input('transaction'),
+                'category_id' => $category_id,
+                'sum' => $request->input('sum'),
+                'currency_id' => $currency_id
+            ]);
+
+        return  $this->index($request);
     }
 
     /**
-     * Display the specified resource.
+     * Удаление из БД экземпляров модели Transaction
      */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request) {
 
-        Transaction::find($request->id)
+        Transaction::find($request->input('id'))
             ->delete();
-    
-        
+
+        return  $this->index($request);
+     
     }
 }

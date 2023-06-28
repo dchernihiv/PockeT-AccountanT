@@ -1,10 +1,20 @@
-.form-box, .window {
+.form-box, .window, .report-conteiner {
     border: 1px solid rgb(177, 149, 23);
     border-radius: 15px;
     color: rgb(177, 149, 23);
     background: transparent;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 20px rgb(177, 149, 23);
+}
+
+.form-control, .form-control:focus, .form-check-input, .form-select {
+    background-color: transparent;
+    color: white;
+}
+
+option {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
 }
 
 .btn {
@@ -50,6 +60,7 @@ div a {
     top: 38vh;
     right: 2vw;
     display: none;
+    
 
 }
 
@@ -70,5 +81,9 @@ a:link, a:visited {
 
 span {
     color: white;
+}
+
+button[name="change"], button[name="remove"], .modify {
+    display: none;
 }
     

@@ -12,9 +12,15 @@
         </div>
     @endif
 
+    <div class="conteiner d-flex flex-row justify-content-end mt-4 me-4">
+        <button type="button" class="btn">
+            <a href="{{ route('login') }}">В попереднє меню</a>
+        </button>
+    </div>
+
     <div class="conteiner form-box col-4 mx-auto my-5">
         <div class="text-center fs-3 name">Реєстрація</div>
-        <form method="post">
+        <form method="post" autocomplete="off">
             @csrf
 
             <div class="mt-3 ms-2 me-2">
