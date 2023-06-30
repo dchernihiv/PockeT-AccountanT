@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class FinanceDataController extends Controller {
 
     /**
-     * 
+     * Отображение таблицы транзакций за выбраный период с возможностью дальнейшего редактирования записей
      */
     public function index(Request $request) {
      
@@ -50,7 +50,6 @@ class FinanceDataController extends Controller {
                     $data[$i]['currency'] = $currency;
                     unset($data[$i][$key]);
                 }
-
             }
         }
 
@@ -62,7 +61,7 @@ class FinanceDataController extends Controller {
     }
 
     /**
-     * Добавление в БД экземпляров модели Transaction
+     * Добавление новых транзакций в БД 
      */
 
     public function create(Request $request) {
@@ -96,12 +95,13 @@ class FinanceDataController extends Controller {
 
         $array = collect($data)->except(['category', 'subcategory', 'currency'])->toArray();
         Transaction::create($array);
+        
         return back();
 
     }
 
     /**
-     * Обновление в БД экземпляров модели Transaction
+     * Изменение транзакций в БД
      */
 
     public function update(Request $request) {
@@ -132,7 +132,7 @@ class FinanceDataController extends Controller {
     }
 
     /**
-     * Удаление из БД экземпляров модели Transaction
+     * Удаление транзакций из БД 
      */
 
     public function destroy(Request $request) {

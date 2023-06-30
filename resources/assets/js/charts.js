@@ -5,11 +5,16 @@ import moment from 'moment';
 export class Report {
 
     constructor(csrfToken, createReportBtn, data = null, failMessage = null) {
+
         this.csrfToken = csrfToken;
         this.createReportBtn = createReportBtn;
         this.data = data;
         this.failMessage = failMessage;
     }
+
+    /**
+     *  Создание графиков
+     */
 
     createChart(color, label, array, type) {
 
@@ -33,6 +38,10 @@ export class Report {
          
     }
 
+    /**
+     *  Связь с сервером
+     */
+
     async requestToServer ( { url, type, date, transaction, newItem, subNewItem } ) {
 
         let response = await fetch(url, {
@@ -53,6 +62,10 @@ export class Report {
 
     }
 
+    /**
+     *  
+     */
+
     sendData() {
 
         /** Получение пользовательского ввода */ 
@@ -72,7 +85,6 @@ export class Report {
                     )
                     .map(item => item.value);
 
-            /** Связь с сервером */
                 await this.requestToServer(
                     { url: url, type: result[0], date: [result[1], result[2]], transaction: result[3], 
                         newItem: result[4], subNewItem: result[5]
@@ -93,6 +105,7 @@ export class Report {
                     }
                 }
                 
+                /** Отрисовка графиков */
                 formReport.setAttribute('style', 'display: none');
                 chart.setAttribute('style', 'display: block');
                 

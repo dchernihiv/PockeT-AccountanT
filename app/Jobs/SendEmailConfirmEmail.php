@@ -10,18 +10,21 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 
-class SendEmail implements ShouldQueue
+
+class SendEmailConfirmEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      */
-    public function __construct()
+
+    public $user;
+
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -29,8 +32,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        //event(new Registered(Auth::user()));
-     
-        dd('hello');
+        event(new Registered($this->user)); 
     }
 }

@@ -7,12 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\FinanceDataController;
 
-use App\Jobs\SendEmail;
-Route::view('/', 'web.home')->name('home');
 
-Route::get('test', function() {
-    SendEmail::dispatch();
-});
+Route::view('/', 'web.home')->name('home');
 
 
 /**
@@ -24,6 +20,7 @@ Route::prefix('user-registration')->middleware('guest')->group(function () {
     Route::get('/', [RegistrationController::class, 'index'])->name('registr');
 
     Route::post('/', [RegistrationController::class, 'registration']);
+
 });
 
 
@@ -36,6 +33,7 @@ Route::prefix('user-login')->group( function () {
     Route::get('/', [LoginController::class, 'index'])->name('login');
 
     Route::post('/', [LoginController::class, 'login']);
+
 });
 
 
@@ -53,6 +51,7 @@ Route::name('verification.')->middleware('auth')->group( function () {
     Route::get('/email/{id}/{hash}', [LoginController::class, 'confirm'])->middleware('signed')->name('verify');
 
     Route::get('/email/verification-notification', [LoginController::class, 'send'])->name('send');
+
 });
 
 
@@ -102,7 +101,9 @@ Route::name('web.')->middleware(['auth', 'verified'])->group( function () {
 });
 
 
-/* Routs render lists */
+/**
+ * Routs render lists
+ */
 
 Route::post('/show/items', [WebController::class, 'showItems']);
 

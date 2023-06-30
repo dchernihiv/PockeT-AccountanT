@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
-use App\Jobs\SendEmail;
+use App\Jobs\SendEmailConfirmEmail;
+
 
 class LoginController extends Controller
 {
@@ -37,12 +37,13 @@ class LoginController extends Controller
 
         if (Auth::attempt($data, $request->input('remember'))) {
 
-            SendEmail::dispatch();
-
             $request->session()->regenerate();
+            
+            SendEmailConfirmEmail::dispatch(Auth::user());
 
             return redirect()->route('web.category');
         }
+
         return to_route('login')->withErrors(['fail-login' => 'Користувач за цими облікованими даними не знайдений']);
     }
 
@@ -52,6 +53,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        
         return redirect()->route('login');
     }
 
@@ -67,7 +69,7 @@ class LoginController extends Controller
 
     public function send(Request $request)
     {
-        $request->user()->sendEmailVerificationNotification();
+        SendEmailConfirmEmail::dispatch(Auth::user());
         return back()->with('message', 'Посилання для верифікаціі email відправлено!');
     }
 

@@ -1,8 +1,8 @@
 export class Lists {
 
     constructor(
-        radioBtn, csrfToken, modalWindowCallBtn, modalWindow, newTitle, addNewItemBtn, createNewItem,
-        modifyBtn, valueTargetButton = null, items = null, failMessage = null
+        radioBtn, csrfToken, modalWindowCallBtn, modalWindow, newTitle, addNewItemBtn,
+        createNewItem, modifyBtn, valueTargetButton = null, items = null, failMessage = null
     ) {
 
         this.radioBtn = radioBtn;
@@ -18,6 +18,10 @@ export class Lists {
         this.modifyBtn = modifyBtn;
 
     }
+
+    /**
+     * Связь с сервером
+     */
 
     async requestToServer
             ({ url, transaction, newItem, subNewItem, currency, targetButton, date, id, sum })
@@ -46,6 +50,10 @@ export class Lists {
         else if (response.status == 422) this.failMessage = await response.json();
 
     }
+
+    /**
+     * Отображение модального окна, в котором можно создавать новые категории/подкатегории/валюты
+     */
 
     showModalWindow() {
 
@@ -86,6 +94,10 @@ export class Lists {
 
     }
 
+    /**
+     * Создание элементов "option" списков категорий/подкатегорий/валют
+     */
+
     createItems(textNode, parentElement, emptyItem = false) {
 
         let option = document.createElement('option');
@@ -101,6 +113,10 @@ export class Lists {
         }
 
     }
+
+    /**
+     * Заполнение списков категорий/подкатегорий/валют данными из БД
+     */
 
     showItems() {
 
@@ -163,9 +179,12 @@ export class Lists {
         }
     }
 
+    /**
+     * Рендеринг категорий и подкатегорий в зависимости от выбора кнопки "доходы/расходы"
+     */
+
     initialRenderLists() {
 
-        /** Рендеринг категорий и подкатегорий в зависимости от выбора кнопки "доходы/расходы" */
         let url = "http://buh.ua/show/items";
 
         this.radioBtn.forEach(btn => {
@@ -177,6 +196,10 @@ export class Lists {
         });
        
     }
+
+    /**
+     * Добавление в БД новых элементов списков категорий/подкатегорий/валют и их рендеринг на клиенте
+     */
 
     sendNewData() {
 
@@ -219,6 +242,7 @@ export class Lists {
 
                     if (this.items) button.click();
 
+                    /** Обработка ошибок валидации */
                     if (this.failMessage) {
 
                         let errorConteiner = document.querySelector('.validationErrors li');
@@ -237,6 +261,11 @@ export class Lists {
         }
 
     }
+
+    /**
+     *  Отображение таблицы визуализации транзакций за выбраный период,
+     *  их изменение/удаление в БД и на клиенте
+     */
 
     modifyRecords() {
 
@@ -317,53 +346,6 @@ export class Lists {
             }
         });
     }
-
-    /** Построение графиков */
-    createChart() {
-        
-        const url = "http://buh.ua/create/report";
-        const createChart = document.forms[0]['generate'];
-
-        createChart.addEventListener('click', async () => {
-            
-            let result = [...document.querySelectorAll('form input, form select')].filter( item =>
-                    (item.name == "type-report" && item.checked)
-                    || (item.name == "transaction" && item.checked)
-                    || (item.name == "subcategory")
-                    || (item.name == "category")
-                    || (item.name == "period")
-                )
-                .map(item => item.value);
-         
-            await this.requestToServer(
-                { url: url, date: [result[1], result[2]], transaction: result[3], newItem: result[4],
-                    subNewItem: result[5]
-                }
-            );
-
-            if (this.failMessage) {
-
-                let errorConteiner = document.querySelector('.validationErrors > ul');
-              
-                for (let key in this.failMessage) {
-
-                    let emptyElement = document.createElement('li');
-                    let text = document.createTextNode(this.failMessage[key][0]);
-                    emptyElement.appendChild(text);
-                    errorConteiner.appendChild(emptyElement);
-                    
-                    errorConteiner.setAttribute('style', 'display: block');
-                }
-            }
-
-
-
-           
-        });
-                
-      
-    }
-
     
 }
 

@@ -4,8 +4,6 @@ import {Report} from './charts';
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-const modifyBtn = document.querySelector('button[name="send-period"]');
-
 const radioBtn = (document.querySelectorAll('input[name="transaction"]'))
     ? document.querySelectorAll('input[name="transaction"]')
     : null;
@@ -30,6 +28,10 @@ const createNewItem = (document.querySelector('input[name="new-item"]'))
     ? document.querySelector('input[name="new-item"]')
     : null;
 
+const modifyBtn = (document.querySelector('button[name="send-period"]'))
+    ? document.querySelector('button[name="send-period"]')
+    : null;
+
 const createReportBtn = (document.querySelector('input[name="generate"]'))
     ? document.querySelector('input[name="generate"]')
     : null;
@@ -37,7 +39,8 @@ const createReportBtn = (document.querySelector('input[name="generate"]'))
 
 
 let newItems = new Lists(
-        radioBtn, csrfToken, modalWindowCallBtn, modalWindow, newTitle, addNewItemBtn, createNewItem, modifyBtn
+        radioBtn, csrfToken, modalWindowCallBtn, modalWindow,
+        newTitle, addNewItemBtn, createNewItem, modifyBtn
     );
 newItems.initialRenderLists();
 newItems.sendNewData();
